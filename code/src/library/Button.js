@@ -37,7 +37,7 @@ export const RemoveItemButton = styled.button`
   border: none;
   padding: .5em 1em;
   color: white;
-  margin: 2.5em;
+  margin: .5em;
     &:hover {
       border: 1px solid black;
       background-color: white;

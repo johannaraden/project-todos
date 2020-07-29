@@ -3,7 +3,7 @@ import { Header } from './components/Header'
 import { TodoList } from './components/TodoList'
 import { TodoInput } from './components/TodoInput'
 import { Provider } from 'react-redux'
-import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import { combineReducers, createStore } from '@reduxjs/toolkit'
 import { todos } from './reducers/reducer'
 import styled from 'styled-components'
 
@@ -11,26 +11,53 @@ import styled from 'styled-components'
 const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 70%;
   border-radius: 6px;
   margin: 5em auto;
-  background-color: white;
+  background-color: lightblue;
   font-family: 'Helvetica';
 `
+const Main = styled.div`
+  background-color: white;
+  border-radius: 6px;
+`
+
 const reducer = combineReducers({
   todos: todos.reducer
 })
 
-const store = configureStore({ reducer })
+// Set up the localstorage
 
+const persistedStateJSON = localStorage.getItem('reduxState')
+let persistedState = {}
+
+if (persistedStateJSON) {
+  persistedState = JSON.parse(persistedStateJSON)
+}
+
+// Creating store 
+
+const store = createStore( 
+  reducer,
+  persistedState,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  )
+
+// Storing state and subscribing to changes in state
+
+  store.subscribe(() => {
+    localStorage.setItem('reduxState', JSON.stringify(store.getState()));
+  })
 
 export const App = () => {
   return (
     <Provider store={store}>
       <AppContainer>
         <Header />
-        <TodoList />
-        <TodoInput />
+        <Main>
+          <TodoList />
+          <TodoInput />
+        </Main>
       </AppContainer>
     </Provider>
   )

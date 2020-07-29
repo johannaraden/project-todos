@@ -7,17 +7,29 @@ import { RemoveButton, SubmitButton } from '../library/Button'
 const InputContainer = styled.form`
   padding: 2em;
   display: flex;
-  margin: 0 2em;
+  margin: 4em 2em 2em 2em;
   justify-content: space-between; 
+  border-top: 1px solid black;
 `
 
 const InputField = styled.input`
   padding: .5em 1em;
 `
 
+const CatField = styled.select`
+  padding: .5em 1em;
+`
+
+const DatePick = styled.input`
+  padding: .5em 1em;
+`
+
 export const TodoInput = ({id}) => {
   const dispatch = useDispatch()
   const [inputValue, setInputValue] = useState('')
+  const [category, setCategory] = useState('')
+  const [date, setDate] = useState()
+  // const options = useSelector((store) => store.todos.categories)
 
 
   const handleOnSubmit = event => { 
@@ -26,7 +38,9 @@ export const TodoInput = ({id}) => {
       id: id,
       itemInfo: {
         text: inputValue,
-        complete: false
+        complete: false,
+        category: category,
+        dueDate: date
       }
     })
     )
@@ -48,6 +62,22 @@ export const TodoInput = ({id}) => {
           value={inputValue}
           placeholder='What do you need to do...'>
         </InputField> 
+        <CatField
+          name="category" id="category"
+          value={(category === '') ? null : category.value}
+          onChange={e => setCategory(e.target.value)}
+        >
+          <option default value=""> -- select an option -- </option>
+          <option value="Work">Work</option>
+          <option value="Shopping">Shopping</option>
+          <option value="House">House</option>
+          <option value="Family">Family</option>
+        </CatField>
+        <DatePick
+          type='date'
+          onChange={e => setDate(e.target.value)} default={Date.now()} selected={date} placeholderText='select a due date'
+        >
+        </DatePick>
         <SubmitButton
           type='submit'
           value='add to list'
