@@ -5,17 +5,24 @@ import { TodoInput } from './components/TodoInput'
 import { Provider } from 'react-redux'
 import { combineReducers, createStore } from '@reduxjs/toolkit'
 import { todos } from './reducers/reducer'
+import { DeviceSize } from './library/DeviceSizes'
 import styled from 'styled-components'
 
 
 const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 70%;
+  width: 93%;
   border-radius: 6px;
   margin: 5em auto;
   background-color: lightblue;
   font-family: 'Helvetica';
+  @media ${DeviceSize.tablet} {
+    width: 80%;
+  }
+  @media ${DeviceSize.laptop} {
+    width: 70%;
+  }
 `
 const Main = styled.div`
   background-color: white;

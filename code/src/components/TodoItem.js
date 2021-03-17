@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import moment from 'moment'
 import { RemoveItemButton } from '../library/Button'
 import { todos } from '../reducers/reducer'
+import { DeviceSize } from '../library/DeviceSizes'
 import 'styles/styling.css'
 
 
@@ -53,7 +54,6 @@ export const TodoItem = ({ itemIndex }) => {
       </div>
     </>
   )
-
 }
 
 const Input = styled.input`
